@@ -1,4 +1,4 @@
-pivot points in fortran 77 example
+      pivot points in fortran 77 example
 ChatGPT
 
 Pivot points are commonly used in numerical algorithms for solving systems of linear equations, particularly in matrix operations like Gaussian elimination. Here's an example in Fortran 77 to illustrate how pivot points might be used in a basic context. This example will focus on a simple matrix operation using partial pivoting.
@@ -11,10 +11,15 @@ fortran
       INTEGER I, J, K, MAX, N, TEMP, INDEX
       PARAMETER (N=3)
       DOUBLE PRECISION A(N, N), B(N)
-
+      
+      Note:
       DATA A /1.0D0, 2.0D0, 3.0D0, 
      &     4.0D0, 5.0D0, 6.0D0,
-     &     7.0D0, 8.0D0, 10.0D0/
+     &     7.0D0, 8.0D0, 10.0D0/ 
+      is edited in the pivotpoints.f as follows with the & moved to the end of the previous line.
+          DATA A /1.0D0, 2.0D0, 3.0D0, &
+        4.0D0, 5.0D0, 6.0D0, &
+        7.0D0, 8.0D0, 10.0D0/
       DATA B /6.0D0, 15.0D0, 25.0D0/
 
       PRINT *, 'Initial matrix A and vector B'
