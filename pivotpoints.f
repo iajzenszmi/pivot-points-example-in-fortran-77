@@ -1,0 +1,55 @@
+      PROGRAM PIVOTEXAMPLE
+      INTEGER I, J, K, MAX, N, TEMP, INDEX
+      PARAMETER (N=3)
+      DOUBLE PRECISION A(N, N), B(N)
+
+      DATA A /1.0D0, 2.0D0, 3.0D0, &
+        4.0D0, 5.0D0, 6.0D0, &
+        7.0D0, 8.0D0, 10.0D0/
+      DATA B /6.0D0, 15.0D0, 25.0D0/
+
+      PRINT *, 'Initial matrix A and vector B'
+      DO I = 1, N
+        PRINT 10, (A(I, J), J=1, N), B(I)
+10    FORMAT (3F8.2, F8.2)
+      END DO
+
+      ! Forward elimination process with partial pivoting
+      DO K = 1, N-1
+        ! Finding the pivot row
+        MAX = K
+        DO I = K+1, N
+          IF (ABS(A(I, K)) .GT. ABS(A(MAX, K))) THEN
+            MAX = I
+          END IF
+        END DO
+
+        ! Swapping the rows if necessary
+        IF (MAX .NE. K) THEN
+          DO J = K, N
+            TEMP = A(K, J)
+            A(K, J) = A(MAX, J)
+            A(MAX, J) = TEMP
+          END DO
+          TEMP = B(K)
+          B(K) = B(MAX)
+          B(MAX) = TEMP
+        END IF
+
+        ! Elimination step
+        DO I = K+1, N
+          TEMP = A(I, K) / A(K, K)
+          B(I) = B(I) - TEMP * B(K)
+          DO J = K+1, N
+            A(I, J) = A(I, J) - TEMP * A(K, J)
+          END DO
+          A(I, K) = 0.0D0
+        END DO
+      END DO
+
+      PRINT *, 'Modified matrix A and vector B after pivoting'
+      DO I = 1, N
+        PRINT 10, (A(I, J), J=1, N), B(I)
+      END DO
+
+      END
